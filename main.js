@@ -2,12 +2,11 @@ var redis = require('redis')
 var multer  = require('multer')
 var express = require('express')
 var fs      = require('fs')
-var httpProxy = require('http-proxy')
 
-var app = express()
+var app = express();
 
 // REDIS Client
-var client = redis.createClient(6379, '127.0.0.1', {})
+var client = redis.createClient(6379, '127.0.0.1', {});
 
 // Add hook to make it easier to get all visited URLS.
 app.use(function(req, res, next) 
@@ -61,8 +60,8 @@ app.get('/recent', function(req, res) {
 
 // Will match the get request to /set
 app.get('/set', function(req, res) {
-  	client.set("sample-key", "this message will self-destruct in 10 seconds");
-	client.expire("sample-key",10);
+  	client.set("sample-key", "this message will self-destruct in 20 seconds");
+	client.expire("sample-key",20);
 	res.send("Sample value set");
 	
 })
@@ -79,20 +78,21 @@ var targetServers = [];
 
 // Starting all the server instances
 serverPorts.forEach(function(serverPort){
-  var server = app.listen(serverPort);
-  var host = server.address().address;
-  var port = server.address().port;
+  var server = app.listen(serverPort)
+  var host = server.address().address
+  var port = server.address().port
+
   var targetServer = "http://"+host+":"+port;
   targetServers.push(targetServer);
-  console.log('Example app listening at http://%s:%s', host, port)
+  console.log('Example app listening at http://%s:%s', host, port);
 
-});
+})
 
 // Deleting the entries of the list if exists and Appending target server instances to the redis list
 client.del("targetServers");
 targetServers.forEach(function(target) {
     client.lpush("targetServers", target);
-});
+})
 
 
 

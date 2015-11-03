@@ -1,4 +1,3 @@
-var http = require('http')
 var httpProxy = require('http-proxy')
 var redis = require('redis')
 var express = require('express')
