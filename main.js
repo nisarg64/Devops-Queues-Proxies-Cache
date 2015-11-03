@@ -60,15 +60,24 @@ app.get('/recent', function(req, res) {
 
 // Will match the get request to /set
 app.get('/set', function(req, res) {
-  	client.set("sample-key", "this message will self-destruct in 20 seconds");
-	client.expire("sample-key",20);
+  	client.set("sample-key", "this message will self-destruct in 10 seconds");
+	client.expire("sample-key",10);
 	res.send("Sample value set");
 	
 })
 
 // Will match the get request to /get
 app.get('/get', function(req, res) {
-	client.get("sample-key", function(err,value){ res.send(value)});
+	client.get("sample-key", function(err,value){ 
+		if(!value)
+			res.send("Key not set!");
+		else
+			res.send(value)});
+})
+
+// Will match the get request to /
+app.get('/', function(req, res) {
+	res.send("Hello World");
 	
 })
 
