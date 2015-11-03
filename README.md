@@ -1,6 +1,8 @@
 # Devops HW3 - Queues, Proxies and Cache
 Understanding the basic building blocks that form complex infrastructure is an important precedent to being able to construct and deploy it.
 
+#### Screencast Link : https://youtu.be/mPgcmCvKLOc
+
 ## Installation:
 - Install a stable version of NodeJS (v0.10.31 or higher)
 - Install redis and start the redis-server on port 6379
